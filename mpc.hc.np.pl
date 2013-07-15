@@ -39,10 +39,10 @@ Xchat::hook_command("np", sub {
         $mpchcnp =~ s{.+<p id="mpchc_np">(.+?)</p>.+}{$1}s; # Extract np text from the html
         # Remove whitespace at beginning and end of string and replace entities
         $mpchcnp =~ s/^\s+|\s+$//g;
-        $mpchcnp =~ s/&laquo;/\xab/g;
+        $mpchcnp =~ s/&laquo;/\xAB/g;
         # Couldn't find proper way to replace it so I'm using plain hyphen as separator ;x
         $mpchcnp =~ s/&bull;/\x2D/g;
-        $mpchcnp =~ s/&raquo;/\xbb/g;
+        $mpchcnp =~ s/&raquo;/\xBB/g;
         Xchat::command("say $mpchcnp");
     }
     return Xchat::EAT_ALL;
