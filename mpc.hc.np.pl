@@ -17,12 +17,12 @@ use LWP::UserAgent;
 #############################################################################
 
 my $version = "0.4";
-Xchat::register("MPC-HC API", $version, "Displays MPC-HC Player Info!", "");
-Xchat::print("Loaded - MPC-HC API - Use: /np :: Setup: Open MPC-HC -> Options -> Player -> Web Interface -> Listen on port");
+register("MPC-HC API", $version, "Displays MPC-HC Player Info!", "");
+prnt("Loaded - MPC-HC API - Use: /np :: Setup: Open MPC-HC -> Options -> Player -> Web Interface -> Listen on port");
 
 #############################################################################
 
-Xchat::hook_command("np", sub {
+hook_command("np", sub {
     my $browser = LWP::UserAgent->new;                  # Create a session
     my $url     = "http://localhost:13579/info.html";   # HTML file here
     $browser->timeout(3);                               # How long to wait
@@ -31,7 +31,7 @@ Xchat::hook_command("np", sub {
 
     # Report back if it's wrong
     if (!$response->is_success) {
-        Xchat::command("echo - Could not get: $url. Open MPC-HC -> Options -> Player -> Web Interface -> Listen on port");
+        command("echo - Could not get: $url. Open MPC-HC -> Options -> Player -> Web Interface -> Listen on port");
     }
     else {  # Report back if it's right
         # Get results into variable
@@ -43,9 +43,9 @@ Xchat::hook_command("np", sub {
         # Couldn't find proper way to replace it so I'm using plain hyphen as separator ;x
         $mpchcnp =~ s/&bull;/\x2D/g;
         $mpchcnp =~ s/&raquo;/\xBB/g;
-        Xchat::command("say $mpchcnp");
+        command("say $mpchcnp");
     }
-    return Xchat::EAT_ALL;
+    return EAT_ALL;
 });
 
 #############################################################################
